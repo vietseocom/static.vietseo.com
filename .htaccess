@@ -1,0 +1,92 @@
+# =========================================
+# Base / Index
+# =========================================
+RewriteEngine On
+
+# Nếu vHost chấp nhận, giữ lại chỉ thị này (không gây lỗi trên Apache 2.4)
+# Nếu máy chủ là OpenLiteSpeed/Nginx proxy, nên cấu hình ở vHost thay vì .htaccess
+DirectoryIndex index.php index.html
+
+# Nếu site không nằm ở webroot, hãy đặt RewriteBase
+#RewriteBase /
+
+
+
+# =========================================
+# Bảo mật file nhạy cảm (Apache 2.4 cú pháp mới)
+# =========================================
+# Chặn xem .ht*, .staccess
+<FilesMatch "^\.ht">
+    Require all denied
+</FilesMatch>
+<Files ".staccess">
+    Require all denied
+</Files>
+
+# Chặn các file cấu hình/diagnostic thường gặp
+<FilesMatch "^(composer\.(json|lock)|\.env|config\.php|phpinfo\.php)$">
+    Require all denied
+</FilesMatch>
+
+# =========================================
+# CORS (chỉ nên mở cho tĩnh; hỗ trợ OPTIONS)
+# =========================================
+<IfModule mod_headers.c>
+    # Cho phép CORS với tài nguyên tĩnh phổ biến
+    <FilesMatch "\.(?:css|js|mjs|png|jpe?g|gif|svg|webp|ico|woff2?|ttf|otf)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Accept, Origin, Authorization"
+    </FilesMatch>
+
+    # Trả lời preflight (OPTIONS)
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^ - [R=204,L]
+</IfModule>
+
+# =========================================
+# HSTS (chỉ gửi khi đang ở HTTPS để tránh “lock-out” ở local)
+# =========================================
+<IfModule mod_headers.c>
+    <If "%{HTTPS} == 'on'">
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    </If>
+</IfModule>
+
+# =========================================
+# Nén nội dung (Gzip/Deflate). Nếu có Brotli, bật ở server tốt hơn.
+# =========================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/xhtml+xml image/svg+xml
+    AddOutputFilterByType DEFLATE font/ttf font/otf application/font-woff application/font-woff2 font/woff font/woff2
+</IfModule>
+
+# Tránh dùng SetOutputFilter theo FilesMatch (kiểu cũ) -> đã thay bằng AddOutputFilterByType ở trên
+
+# =========================================
+# Bộ nhớ đệm (Expires) - gọn, không trùng lặp
+# =========================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    # 1 năm cho ảnh & font
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png  "access plus 1 year"
+    ExpiresByType image/gif  "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff  "access plus 1 year"
+    ExpiresByType font/ttf   "access plus 1 year"
+    ExpiresByType font/otf   "access plus 1 year"
+
+    # 1 tháng cho CSS/JS/PDF
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+
+    # Mặc định
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# Tuỳ chọn: g

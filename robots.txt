@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /index.php
+Sitemap: https://vietseo.com/sitemap.xml
+

@@ -1,0 +1,57 @@
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	div, p, span, li, ol, td, strong, a, u, b {
+		font-size: 16px !important;
+	}
+	b, strong{ color: #000;} 
+	.com_name { text-align:center !important; border: 0px solid red;}
+	.btn {font-size: 14px !important;}
+}
+
+/*// Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+	div, p, span, li, ol, td, strong, a, u, b {
+		font-size: 15px !important;
+		
+	}
+	b, strong{ color: #000;}
+	
+	.com_name { text-align:center !important; border: 0px solid red;}
+	.btn {font-size: 14px !important;}
+}
+
+/*// Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.com_name { text-align:left !important; border: 0px solid red;}
+	#quo_div {
+		/*font-size:15px !important;*/
+	}	
+
+}
+
+/*// Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.com_name { text-align:left !important; border: 0px solid red;}
+	#quo_div {
+		/*font-size:14px !important;*/
+	}	
+	
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {	
+	.com_name { text-align:left !important; border: 0px solid red;}
+	#quo_div {
+		font-size:14px !important;		
+	}	
+	
+	
+}
+
+@page {
+}
+
+@media print {
+}

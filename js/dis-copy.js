@@ -1,0 +1,1 @@
+function disableSelection(e){void 0!==e.onselectstart?e.onselectstart=function(){return!1}:void 0!==e.style.MozUserSelect?e.style.MozUserSelect="none":e.onmousedown=function(){return!1},e.style.cursor="default"}
