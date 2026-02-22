@@ -25,10 +25,39 @@ body{
 	margin: auto;
 }
 
+#quo_div table td { text-align: left !important; }
+
+#quo_div table.sign_table td { text-align: center !important; }
+
+
+#quo_div ul{
+    padding-left: 1em; 
+    margin: 0;          /* bỏ margin mặc định */
+}
+
 ol li ol li {
 	list-style: disc;       /* Dấu chấm tròn đen */
 	list-style-position: inside;  /* (tùy chọn) để chấm nằm trong dòng */
 }
+
+blockquote {
+  margin: 28px 0;
+  padding: 20px 24px;
+  border-left: 5px solid #111;
+  background: linear-gradient(90deg, #f7f7f7, #ffffff);
+}
+
+blockquote p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222;
+}
+
+blockquote p strong {
+  font-weight: 600;
+}
+
 
 .content ol, .content ul {
 	padding-left: 1em;
